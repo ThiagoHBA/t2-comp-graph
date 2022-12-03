@@ -44,10 +44,10 @@ class Pyramid(PolygonObject):
          self.faces = [
             #Base faces
             [
-                self.vertexes[0],
                 self.vertexes[1],
                 self.vertexes[2],
                 self.vertexes[3],
+                self.vertexes[4],
             ], 
             #Base+Top Faces
             [self.vertexes[0], self.vertexes[1], self.vertexes[4]], 

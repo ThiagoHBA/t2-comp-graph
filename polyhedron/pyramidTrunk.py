@@ -21,38 +21,52 @@ class PyramidTrunk(PolygonObject):
         higherBaseSize = self.higherBaseSize / 2
         baseYOrigin = (self.height / 2)
         return [
-            #heigthOrigin
-            [0, baseYOrigin, 0],
             #LowerBase
             [lowerBaseSize, -baseYOrigin, lowerBaseSize],
             [lowerBaseSize, -baseYOrigin, -lowerBaseSize],
             [-lowerBaseSize, -baseYOrigin, -lowerBaseSize],
-            [-lowerBaseSize, -baseYOrigin, -lowerBaseSize],
+            [-lowerBaseSize, -baseYOrigin, lowerBaseSize],
             #higherBase
             [higherBaseSize, baseYOrigin, higherBaseSize],
             [higherBaseSize, baseYOrigin, -higherBaseSize],
             [-higherBaseSize, baseYOrigin, -higherBaseSize],
-            [-higherBaseSize, baseYOrigin, -higherBaseSize],
+            [-higherBaseSize, baseYOrigin, higherBaseSize],
         ]
 
     def createEdges(self):
         self.edges = [
             #LowerBase
+            [self.vertexes[0], self.vertexes[1]],
             [self.vertexes[1], self.vertexes[2]],
             [self.vertexes[2], self.vertexes[3]],
-            [self.vertexes[3], self.vertexes[4]],
-            [self.vertexes[4], self.vertexes[1]],
+            [self.vertexes[3], self.vertexes[0]],
             #Conecting with top
+            [self.vertexes[4], self.vertexes[5]],
             [self.vertexes[5], self.vertexes[6]],
             [self.vertexes[6], self.vertexes[7]],
-            [self.vertexes[7], self.vertexes[8]],
-            [self.vertexes[8], self.vertexes[5]],
+            [self.vertexes[7], self.vertexes[4]],
             #Conecting
+            [self.vertexes[0], self.vertexes[4]],
             [self.vertexes[1], self.vertexes[5]],
             [self.vertexes[2], self.vertexes[6]],
             [self.vertexes[3], self.vertexes[7]],
-            [self.vertexes[4], self.vertexes[8]],
         ]
 
-    def createFaces(self):
-        pass
+    def createFaces(self):         
+        self.faces = [
+            #lowerBaseFaces
+            [
+                self.vertexes[0],
+                self.vertexes[1],
+                self.vertexes[2],
+                self.vertexes[3],
+            ], 
+            [
+                self.vertexes[4],
+                self.vertexes[5],
+                self.vertexes[6],
+                self.vertexes[7],
+            ], 
+            #Base+Top Faces
+            #TODO
+        ]
