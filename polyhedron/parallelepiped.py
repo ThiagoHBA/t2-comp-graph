@@ -6,8 +6,8 @@ class Parallelepiped(PolygonObject):
     depth = 0.0
 
     def __init__(self, width, heigth, depth):
-        self.width = width,
-        self.height = heigth,
+        self.width = width
+        self.height = heigth
         self.depth = depth
 
     def create(self):
@@ -16,16 +16,16 @@ class Parallelepiped(PolygonObject):
         return self
 
     def createVertex(self):
-        center = 0.0
+        width, heigth, depth = self.width/2, self.height/2, self.depth/2
         return [
-            [center, center, center],
-            [center, center, -center],
-            [-center, center, -center],
-            [-center, center, center],
-            [center, -center, center],
-            [center,- center, -center],
-            [-center, -center, -center],
-            [-center, -center, center],
+            [width, heigth, depth],
+            [width, heigth, -depth],
+            [-width, heigth,-depth],
+            [-width, heigth, depth],
+            [width, -heigth, depth],
+            [width, -heigth, -depth],
+            [-width, -heigth, -depth],
+            [-width, -heigth, depth],
         ]
 
     def createEdges(self):
