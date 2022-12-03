@@ -28,11 +28,11 @@ class Plot:
     def plot_objeto(self, objeto: PolygonObject):
         _, ax = self.initialize_plot()
 
-        for linha in objeto.edges:
+        for line in objeto.edges:
             ax.plot(
-                [linha[0][0], linha[1][0]],
-                [linha[0][1], linha[1][1]],
-                zs=[linha[0][2], linha[1][2]],
+                [line[0][0], line[1][0]],
+                [line[0][1], line[1][1]],
+                zs=[line[0][2], line[1][2]],
             )
 
         # ax.add_collection3d(Poly3DCollection(objeto.faces, linewidths=1.5))
@@ -49,11 +49,11 @@ class Plot:
     #     fig, ax = init_plot()
 
     #     for objeto in objetos:
-    #         for linha in objeto.arestas:
+    #         for line in objeto.arestas:
     #             ax.plot(
-    #                 [linha[0][0], linha[1][0]],
-    #                 [linha[0][1], linha[1][1]],
-    #                 zs=[linha[0][2], linha[1][2]],
+    #                 [line[0][0], line[1][0]],
+    #                 [line[0][1], line[1][1]],
+    #                 zs=[line[0][2], line[1][2]],
     #             )
 
     #         ax.add_collection3d(Poly3DCollection(objeto.faces, linewidths=1.5))
