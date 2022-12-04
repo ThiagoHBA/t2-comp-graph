@@ -25,7 +25,7 @@ class Plot:
         # ax.plot([0, 0], [5.2, -5.2], [0, 0], color='Black', alpha=0.4)
         # ax.plot([0, 0], [0, 0], [5.2, -5.2], color='Black', alpha=0.4)
 
-    def plot_objeto(self, objeto: PolygonObject):
+    def plot_object(self, objeto: PolygonObject):
         _, ax = self.initialize_plot()
 
         for line in objeto.edges:

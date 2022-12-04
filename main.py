@@ -20,7 +20,7 @@ def main():
     cube.rotate(rotationMatrix)
     cube.translation(translationMatrix)
 
-    Plot().plot_objeto(cube)
+    Plot().plot_object(cube)
 
 if __name__ == '__main__':
     main()
