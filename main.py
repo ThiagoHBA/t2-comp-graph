@@ -13,9 +13,13 @@ def main():
     pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
 
     scaleMatrix = Transformations.scaleMatrix(x=2, y=2, z=2)
+
     rotationMatrix = Transformations.rotationMatrix(alpha=45)
+    translationMatrix = Transformations.translationMatrix(2,-4, 4)
+
     cube.rotate(rotationMatrix)
-    # cube.scaleObject(matrix)
+    cube.translation(translationMatrix)
+
     Plot().plot_objeto(cube)
 
 if __name__ == '__main__':

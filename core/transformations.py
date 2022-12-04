@@ -16,3 +16,14 @@ class Transformations:
                 [0, 0, 1]
             ])
         return rotationMatrix
+
+    @staticmethod 
+    def translationMatrix(x = 1, y = 1, z = 1):
+        translationMatrix = np.matrix([
+            [1, 0, 0, x],
+            [0, 1, 0, y],
+            [0, 0, 1, z],
+            [0, 0, 0, 1]
+        ])
+
+        return translationMatrix
