@@ -15,10 +15,19 @@ class PolygonObject(ABC):
         for i in range(size):
             print("{}: {}".format(i + 1, self.vertexes[i]))
 
-    def scaleObject(self, scaleMatrix: np.matrix):
-        vertexMatrix = np.matrix(self.vertexes)
+    def scale(self, scaleMatrix: np.matrix):
+        vertexMatrix = self.__vertexMatrix()
         self.vertexes = np.array(np.matmul(vertexMatrix,scaleMatrix))
         self.make()
+
+    def rotate(self, rotationMatrix: np.matrix):
+        vertexMatrix = self.__vertexMatrix()
+        self.vertexes = np.array(np.matmul(vertexMatrix, rotationMatrix))
+        self.make()
+
+    def __vertexMatrix(self):
+        return np.matrix(self.vertexes)
+
 
     @abstractmethod
     def createVertex(self, point_list):

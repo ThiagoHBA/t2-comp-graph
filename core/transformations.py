@@ -1,7 +1,18 @@
 import numpy as np
+from math import sin, cos
 
 class Transformations:
     @staticmethod
     def scale(x = 1, y = 1, z = 1):
-        matrix = np.matrix([[x, 0, 0], [0, y, 0], [0, 0, z]])
-        return matrix
+        scaleMatrix = np.matrix([[x, 0, 0], [0, y, 0], [0, 0, z]])
+        return scaleMatrix
+
+    @staticmethod
+    def rotate(alpha: float):
+        rotationMatrix = np.matrix(
+            [
+                [cos(alpha), -sin(alpha), 0],
+                [sin(alpha), cos(alpha), 0],
+                [0, 0, 1]
+            ])
+        return rotationMatrix
