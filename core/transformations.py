@@ -3,12 +3,12 @@ from math import sin, cos
 
 class Transformations:
     @staticmethod
-    def scale(x = 1, y = 1, z = 1):
+    def scaleMatrix(x = 1, y = 1, z = 1):
         scaleMatrix = np.matrix([[x, 0, 0], [0, y, 0], [0, 0, z]])
         return scaleMatrix
 
     @staticmethod
-    def rotate(alpha: float):
+    def rotationMatrix(alpha: float):
         rotationMatrix = np.matrix(
             [
                 [cos(alpha), -sin(alpha), 0],
