@@ -12,11 +12,11 @@ class Plot:
         self.size = size
 
     def initialize_plot(self):
-        fig = plt.figure(figsize=(10, 10))
+        fig = plt.figure(figsize=(10,10))
         ax = fig.add_subplot(111, projection="3d")
         return fig, ax
 
-    def initialize_eixos(self, ax):
+    def initialize_axis(self, ax):
         ax.set_xlabel("Eixo X")
         ax.set_ylabel("Eixo Y")
         ax.set_zlabel("Eixo Z")
@@ -37,30 +37,28 @@ class Plot:
 
         # ax.add_collection3d(Poly3DCollection(objeto.faces, linewidths=1.5))
 
-        ax.set_zlim3d(-5, 5)
-        ax.set_xlim3d(-5, 5)
-        ax.set_ylim3d(-5, 5)
+        ax.set_zlim3d(-self.size[0], self.size[1])
+        ax.set_xlim3d(-self.size[0], self.size[1])
+        ax.set_ylim3d(-self.size[0], self.size[1])
 
-        self.initialize_eixos(ax)
+        self.initialize_axis(ax)
         plt.show()
 
 
-    # def plot_objetos(self, objetos: List[PolygonObject]):
-    #     fig, ax = init_plot()
+    def plot_mutiple_objects(self, objects: List[PolygonObject]):
+        _, ax = self.initialize_plot()
+        
+        for polygon in objects:
+            for line in polygon.edges:
+                ax.plot(
+                    [line[0][0], line[1][0]],
+                    [line[0][1], line[1][1]],
+                    zs=[line[0][2], line[1][2]],
+                )
 
-    #     for objeto in objetos:
-    #         for line in objeto.arestas:
-    #             ax.plot(
-    #                 [line[0][0], line[1][0]],
-    #                 [line[0][1], line[1][1]],
-    #                 zs=[line[0][2], line[1][2]],
-    #             )
+        ax.set_zlim3d(-self.size[0], self.size[1])
+        ax.set_xlim3d(-self.size[0], self.size[1])
+        ax.set_ylim3d(-self.size[0], self.size[1])
 
-    #         ax.add_collection3d(Poly3DCollection(objeto.faces, linewidths=1.5))
-
-    #     ax.set_zlim3d(-6, 6)
-    #     ax.set_xlim3d(-6, 6)
-    #     ax.set_ylim3d(-6, 6)
-
-    #     init_eixos(ax)
-    #     plt.show()
+        self.initialize_axis(ax)
+        plt.show()
