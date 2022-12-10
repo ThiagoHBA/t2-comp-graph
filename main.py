@@ -4,16 +4,22 @@ from polyhedron.cube import Cube
 from polyhedron.parallelepiped import Parallelepiped
 from polyhedron.pyramid import Pyramid
 from polyhedron.pyramidTrunk import PyramidTrunk
-import matplotlib.pyplot as plt
 
 def main():
-    showQ2()
+    showQ1()
 
 def showQ1():
     cube = Cube(edgeSize = 3.0).create()
     parallelepiped = Parallelepiped(width=3.0, heigth=3.0, depth=6.0).create()
     pyramid = Pyramid(baseSize=3.0, heigth=3.0).create()
     pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
+  
+    cube.multipleTransformations([
+      Transformations.rotationMatrix(45),
+      Transformations.scaleMatrix(1, 2, 3)
+    ])
+
+    cube.translation(Transformations.translationMatrix(2, 3, -4))
 
     Plot(size=(10,10)).plot_object(cube)
 
