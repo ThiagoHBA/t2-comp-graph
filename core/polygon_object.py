@@ -62,6 +62,28 @@ class PolygonObject(ABC):
       result = np.array(np.matmul(homogeneousMatrix, resultant))
       self.setVertexes(result)
 
+  def getObjectCenter(self):
+    xAxis = np.array(self.vertexes)[:,0]
+    yAxis = np.array(self.vertexes)[:,1]
+    zAxis = np.array(self.vertexes)[:,2]
+
+    center = (np.mean(xAxis), np.mean(yAxis), np.mean(zAxis))
+    return center
+
+  @staticmethod
+  def getVolumeCenter(objects):
+    centers = []
+    for polygon in objects:
+        objectCenter = polygon.getObjectCenter()
+        centers.append(objectCenter)
+
+    xAxis = np.mean(np.array(centers)[:,0])
+    yAxis = np.mean(np.array(centers)[:,1])
+    zAxis = np.mean(np.array(centers)[:,2])
+    
+    volumeCenter = (xAxis, yAxis, zAxis)
+    return volumeCenter
+
   def __generateHomogeneousMatrix(self):
     homogeneousMatrix = []
     for (x, y, z) in self.vertexes:

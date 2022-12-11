@@ -5,7 +5,6 @@ class Transformations:
     @staticmethod
     def scaleMatrix(x = 1, y = 1, z = 1):
         scaleMatrix = np.matrix([
-          # [x, 0, 0], [0, y, 0], [0, 0, z]
             [x, 0, 0, 0],
             [0, y, 0, 0],
             [0, 0, z, 0],
@@ -14,18 +13,33 @@ class Transformations:
         return scaleMatrix
 
     @staticmethod
-    def rotationMatrix(alpha: float):
-        rotationMatrix = np.matrix(
+    def rotationMatrix(alpha: float, axis = "x"):
+        if axis == "x":
+            return np.matrix(
             [
               [1, 0, 0, 0],
               [0, cos(alpha), -sin(alpha), 0],
               [0, sin(alpha), cos(alpha), 0],
               [0, 0, 0, 1]
-                # [cos(alpha), -sin(alpha), 0],
-                # [sin(alpha), cos(alpha), 0],
-                # [0, 0, 1]
             ])
-        return rotationMatrix
+        if axis == "y":
+            return np.matrix(
+            [
+              [cos(alpha), 0, -sin(alpha), 0],
+              [0, 1, 0, 0],
+              [sin(alpha), 0, cos(alpha), 0],
+              [0, 0, 0, 1]
+            ])
+        if axis == "z":
+            return np.matrix(
+            [
+              [cos(alpha), sin(alpha), 0, 0],
+              [-sin(alpha), cos(alpha), 0, 0],
+              [0, 0, 1, 0],
+              [0, 0, 0, 1]
+            ])
+
+        raise Exception()
 
     @staticmethod 
     def translationMatrix(x = 1, y = 1, z = 1):
