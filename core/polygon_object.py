@@ -51,6 +51,11 @@ class PolygonObject(ABC):
       
     self.setVertexes(np.array(resultantMatrix))
 
+  def changePerspective(self, perspectiveMatrix: np.matrix):
+    vertexMatrix = self.__generateHomogeneousMatrix()
+    resultant =  np.array(np.matmul(vertexMatrix, perspectiveMatrix))
+    self.setVertexes(resultant)
+    
   def multipleTransformations(self, matrix_list: list[np.matrix]):
     if len(matrix_list) > 0:
       resultant = matrix_list[0]

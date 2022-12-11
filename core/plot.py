@@ -62,3 +62,28 @@ class Plot:
 
         self.initialize_axis(ax)
         plt.show()
+
+    def plot_2D_object(self, polygon: PolygonObject):
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+
+        for line in polygon.edges:
+            ax.plot(
+                [line[0][0], line[1][0]],
+                [line[0][1], line[1][1]]
+            )
+
+        plt.show()
+
+    def plot_multiples_2D_objects(self, objects: List[PolygonObject]):
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+
+        for polygon in objects:
+            for line in polygon.edges:
+                ax.plot(
+                    [line[0][0], line[1][0]],
+                    [line[0][1], line[1][1]]
+                )
+
+        plt.show()
