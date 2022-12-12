@@ -6,6 +6,7 @@ class PolygonObject(ABC):
   vertexes = []
   edges = []
   faces = []
+  color = "black"
 
   def make(self):
     self.createEdges()
@@ -51,10 +52,12 @@ class PolygonObject(ABC):
       
     self.setVertexes(np.array(resultantMatrix))
 
-  def changePerspective(self, perspectiveMatrix: np.matrix):
-    vertexMatrix = self.__generateHomogeneousMatrix()
-    resultant =  np.array(np.matmul(vertexMatrix, perspectiveMatrix))
-    self.setVertexes(resultant)
+  def changePerspective(self, perspectiveMatrix: list[np.matrix], vertex: int):
+    homogeneousMatrix = self.__generateHomogeneousMatrix() 
+    homogeneousMatrix[vertex] = np.matmul(perspectiveMatrix, homogeneousMatrix[vertex])
+    self.setVertexes(np.array(homogeneousMatrix))
+    
+    
     
   def multipleTransformations(self, matrix_list: list[np.matrix]):
     if len(matrix_list) > 0:

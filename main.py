@@ -47,7 +47,7 @@ def showQ2():
     objectLists = [cube, parallelepiped, pyramidTrunk, pyramid, eye]
 
     verifyObjects(objects=objectLists)
-    Plot(size=(20,20)).plot_mutiple_objects(objects=objectLists)
+    Plot(size=(20,20)).plot_multiple_objects(objects=objectLists)
 
 def showQ3():
     cube = Cube(edgeSize = 3.0).create()
@@ -60,7 +60,6 @@ def showQ3():
     parallelepiped.translation(Transformations.translationMatrix(-15, 2, 10))
     pyramidTrunk.translation(Transformations.translationMatrix(-10, 5, 10))
 
-
     cube.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
     parallelepiped.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
     pyramid.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
@@ -68,9 +67,10 @@ def showQ3():
 
     objectLists = [cube, parallelepiped, pyramidTrunk, pyramid]
 
-    '''
-        TERCEIRA
-    '''
+    cube.color = "red"
+    parallelepiped.color = "green"
+    pyramid.color = "black"
+    pyramidTrunk.color = "blue"
 
     eyePoint = (10, -15, 1)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
@@ -78,21 +78,15 @@ def showQ3():
 
     for polygon in objectLists:
         polygon.setVertexes(np.matmul(polygon.vertexes, cameraSystem))
+        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
 
     eye = Cube(edgeSize = 1.0).create()
-    mediumPoint = Cube(edgeSize= 0.5).create()
-
     eye.translation(Transformations.translationMatrix(10, -15, 1))
-    mediumPoint.translation(Transformations.translationMatrix(volumeCenter[0], volumeCenter[1], volumeCenter[2]))
+    eye.translation(Transformations.translationMatrix(-10, 15, -1))
 
     objectLists.append(eye)
-    objectLists.append(mediumPoint)
 
-    Plot(size=(20,20)).plot_mutiple_objects(objects=objectLists)
-
-    ''' 
-        FIM TERCEIRA
-    '''
+    Plot(size=(20,20)).plot_multiple_objects(objects=objectLists)
 
 def showQ4():
     cube = Cube(edgeSize = 3.0).create()
@@ -112,27 +106,31 @@ def showQ4():
 
     objectLists = [cube, parallelepiped, pyramidTrunk, pyramid]
 
+    cube.color = "red"
+    parallelepiped.color = "green"
+    pyramid.color = "black"
+    pyramidTrunk.color = "blue"
+
     eyePoint = (10, -15, 1)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
     cameraSystem = changeBase(eyePoint, volumeCenter)
 
     for polygon in objectLists:
         polygon.setVertexes(np.matmul(polygon.vertexes, cameraSystem))
+        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
 
     for polygon in objectLists:
-        polygonCenter = polygon.getObjectCenter()
-        z = np.subtract(eyePoint, polygonCenter)
-        
-        print("POLYGON: {}, DISTANCE: {}".format(polygon, z[2]))
-        polygon.changePerspective(
-            perspectiveMatrix=Transformations.perspectiveMatrix(alpha=45, z=z[2])
-        )
+        for i in range (len(polygon.vertexes)):
+            perspectiveMatrix = Transformations.perspectiveMatrix(alpha=90, z=polygon.vertexes[i][2])
+            polygon.changePerspective(perspectiveMatrix=perspectiveMatrix, vertex = i)
 
-    eye = Cube(edgeSize = 1.0).create()
-    eye.translation(Transformations.translationMatrix(-20, -5, 0))
-    objectLists.append(eye)
+    # eye = Cube(edgeSize = 1.0).create()
+    # eye.translation(Transformations.translationMatrix(10, -15, 1))
+    # eye.translation(Transformations.translationMatrix(-10, 15, -1))
 
-    Plot(size=(20,20)).plot_mutiple_objects(objectLists)
+    # objectLists.append(eye)
+
+    Plot(size=(20,20)).plot_multiple_2D_objects(objectLists)
 
 def changeBase(eyePoint, volumeCenter):
     eyeDirection = np.subtract(eyePoint, volumeCenter)

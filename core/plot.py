@@ -45,7 +45,7 @@ class Plot:
         plt.show()
 
 
-    def plot_mutiple_objects(self, objects: List[PolygonObject]):
+    def plot_multiple_objects(self, objects: List[PolygonObject]):
         _, ax = self.initialize_plot()
         
         for polygon in objects:
@@ -54,6 +54,7 @@ class Plot:
                     [line[0][0], line[1][0]],
                     [line[0][1], line[1][1]],
                     zs=[line[0][2], line[1][2]],
+                    color = polygon.color
                 )
 
         ax.set_zlim3d(-self.size[0], self.size[1])
@@ -75,7 +76,7 @@ class Plot:
 
         plt.show()
 
-    def plot_multiples_2D_objects(self, objects: List[PolygonObject]):
+    def plot_multiple_2D_objects(self, objects: List[PolygonObject]):
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
@@ -83,7 +84,8 @@ class Plot:
             for line in polygon.edges:
                 ax.plot(
                     [line[0][0], line[1][0]],
-                    [line[0][1], line[1][1]]
+                    [line[0][1], line[1][1]],
+                    color = polygon.color
                 )
 
         plt.show()
