@@ -74,24 +74,33 @@ def showQ3():
 
     eyePoint = (10, -15, 1)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
+
+    for polygon in objectLists:
+        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
+        
     cameraSystem = changeBase(eyePoint, volumeCenter)
 
     for polygon in objectLists:
         polygon.setVertexes(np.matmul(polygon.vertexes, cameraSystem))
-        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
 
     eye = Cube(edgeSize = 1.0).create()
+    mediumPoint = Cube(edgeSize = 0.5).create()
+
     eye.translation(Transformations.translationMatrix(10, -15, 1))
     eye.translation(Transformations.translationMatrix(-10, 15, -1))
 
+    mediumPoint.translation(Transformations.translationMatrix(volumeCenter[0], volumeCenter[1], volumeCenter[2]))
+    mediumPoint.translation(Transformations.translationMatrix(-10, 15, -1))
+
     objectLists.append(eye)
+    objectLists.append(mediumPoint)
 
     Plot(size=(20,20)).plot_multiple_objects(objects=objectLists)
 
 def showQ4():
     cube = Cube(edgeSize = 3.0).create()
     parallelepiped = Parallelepiped(width=3.0, heigth=3.0, depth=6.0).create()
-    pyramid = Pyramid(baseSize=3.0, heigth=3.0).create()
+    pyramid = Pyramid(baseSize=6.0, heigth=6.0).create()
     pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
 
     pyramid.translation(Transformations.translationMatrix(10, 5, 4))
@@ -113,15 +122,18 @@ def showQ4():
 
     eyePoint = (10, -15, 1)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
+
+    for polygon in objectLists:
+        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
+        
     cameraSystem = changeBase(eyePoint, volumeCenter)
 
     for polygon in objectLists:
         polygon.setVertexes(np.matmul(polygon.vertexes, cameraSystem))
-        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
 
     for polygon in objectLists:
         for i in range (len(polygon.vertexes)):
-            perspectiveMatrix = Transformations.perspectiveMatrix(alpha=90, z=polygon.vertexes[i][2])
+            perspectiveMatrix = Transformations.perspectiveMatrix(alpha=45, z=polygon.vertexes[i][2])
             polygon.changePerspective(perspectiveMatrix=perspectiveMatrix, vertex = i)
 
     # eye = Cube(edgeSize = 1.0).create()
