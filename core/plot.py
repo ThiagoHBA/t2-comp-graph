@@ -27,7 +27,8 @@ class Plot:
 
     def plot_object(self, objeto: PolygonObject):
         _, ax = self.initialize_plot()
-
+        
+        # print(objeto.edges)
         for line in objeto.edges:
             ax.plot(
                 [line[0][0], line[1][0]],

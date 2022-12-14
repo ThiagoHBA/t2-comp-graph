@@ -34,7 +34,6 @@ class Cube(PolygonObject):
             [self.vertexes[5], self.vertexes[6]],
             [self.vertexes[6], self.vertexes[7]],
             [self.vertexes[7], self.vertexes[4]],
-            
             [self.vertexes[0], self.vertexes[4]],
             [self.vertexes[1], self.vertexes[5]],
             [self.vertexes[2], self.vertexes[6]],

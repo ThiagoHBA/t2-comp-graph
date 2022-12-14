@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
+from core.transformations import Transformations
+
 
 class PolygonObject(ABC):
   vertexes = []
@@ -20,10 +22,10 @@ class PolygonObject(ABC):
   def setVertexes(self, matrix: np.array):
     def transformatedMatrix():
       finalMatrix = []
-    
-      if matrix.shape[1] == 4:
-        for line in matrix:
-          finalMatrix.append(line[0:3])
+      
+      if matrix.shape[0] == 4:
+        for line in matrix.T:
+          finalMatrix.append(list(line.flat[0:3].flat))
         return np.array(finalMatrix)
 
       return matrix
@@ -33,41 +35,44 @@ class PolygonObject(ABC):
     self.make()
 
   def scale(self, scaleMatrix: np.matrix):
-    vertexMatrix = self.__generateHomogeneousMatrix()
-    resultant = np.array(np.matmul(vertexMatrix, scaleMatrix))
-    self.setVertexes(resultant)
+    currentPoint = self.getObjectCenter()
+
+    self.multipleTransformations([
+      Transformations.translationMatrix(-currentPoint[0], -currentPoint[1], -currentPoint[2]),
+      scaleMatrix,
+      Transformations.translationMatrix(currentPoint[0], currentPoint[1], currentPoint[2])
+    ])
 
   def rotate(self, rotationMatrix: np.matrix):
-    vertexMatrix = self.__generateHomogeneousMatrix()
-    resultant =  np.array(np.matmul(vertexMatrix, rotationMatrix))
-    self.setVertexes(resultant)
+    currentPoint = self.getObjectCenter()
+
+    self.multipleTransformations([
+      Transformations.translationMatrix(-currentPoint[0], -currentPoint[1], -currentPoint[2]),
+      rotationMatrix,
+      Transformations.translationMatrix(currentPoint[0], currentPoint[1], currentPoint[2])
+    ])
 
   def translation(self, translationMatrix: np.matrix):
     homogeneousMatrix = self.__generateHomogeneousMatrix()
-    resultantMatrix = []
-    
-    for i in range(len(homogeneousMatrix)):
-       result = np.array(np.matmul(translationMatrix, homogeneousMatrix[i]))
-       resultantMatrix.append(result[0][:-1])
-      
-    self.setVertexes(np.array(resultantMatrix))
+    resultant = np.matmul(translationMatrix, homogeneousMatrix)
+    self.setVertexes(resultant)
 
   def changePerspective(self, perspectiveMatrix: list[np.matrix], vertex: int):
-    homogeneousMatrix = self.__generateHomogeneousMatrix() 
+    homogeneousMatrix = self.__generateHomogeneousMatrix()
+    homogeneousMatrix = homogeneousMatrix.T
     homogeneousMatrix[vertex] = np.matmul(perspectiveMatrix, homogeneousMatrix[vertex])
-    self.setVertexes(np.array(homogeneousMatrix))
     
-    
+    self.setVertexes(homogeneousMatrix.T)
     
   def multipleTransformations(self, matrix_list: list[np.matrix]):
     if len(matrix_list) > 0:
       resultant = matrix_list[0]
       
       for i in range(1, len(matrix_list)):
-        resultant = np.matmul(resultant, matrix_list[i])
+        resultant = np.matmul(matrix_list[i], resultant)
 
       homogeneousMatrix = self.__generateHomogeneousMatrix()
-      result = np.array(np.matmul(homogeneousMatrix, resultant))
+      result = np.matmul(resultant, homogeneousMatrix)
       self.setVertexes(result)
 
   def getObjectCenter(self):
@@ -94,10 +99,11 @@ class PolygonObject(ABC):
 
   def __generateHomogeneousMatrix(self):
     homogeneousMatrix = []
+
     for (x, y, z) in self.vertexes:
       homogeneousMatrix.append([x, y, z, 1])
       
-    return np.array(homogeneousMatrix)
+    return np.array(homogeneousMatrix).T
 
   @abstractmethod
   def createVertex(self, point_list):

@@ -27,43 +27,60 @@ def showQ1():
 
 def showQ2():
     cube = Cube(edgeSize = 3.0).create()
-    parallelepiped = Parallelepiped(width=3.0, heigth=3.0, depth=6.0).create()
-    pyramid = Pyramid(baseSize=6.0, heigth=6.0).create()
-    pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
+    parallelepiped = Parallelepiped(width=2.0, heigth=2.0, depth=5.0).create()
+    pyramid = Pyramid(baseSize=5.0, heigth=5.0).create()
+    pyramidTrunk = PyramidTrunk(lowerBaseSize=2.0, higherBaseSize=5.0, heigth=7.0).create()
+    
+    cube.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(7.5,5, 2)
+    ])
 
-    pyramid.translation(Transformations.translationMatrix(10, 5, 4))
-    cube.translation(Transformations.translationMatrix(15,10, 4))
-    parallelepiped.translation(Transformations.translationMatrix(-15, 2, 10))
-    pyramidTrunk.translation(Transformations.translationMatrix(-10, 5, 10))
+    pyramid.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(5, 2.5, 2)
+    ])
 
-    cube.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    parallelepiped.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramid.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramidTrunk.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
+    parallelepiped.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-7.5, 1, 5)
+    ])
 
-    eye = Cube(edgeSize = 1.0).create()
-    eye.translation(Transformations.translationMatrix(10, -15, 1))
+    pyramidTrunk.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-5, 2.5, 5)
+    ])
 
-    objectLists = [cube, parallelepiped, pyramidTrunk, pyramid, eye]
+    objectLists = [cube, parallelepiped, pyramidTrunk, pyramid]
 
     verifyObjects(objects=objectLists)
-    Plot(size=(20,20)).plot_multiple_objects(objects=objectLists)
+    Plot(size=(10,10)).plot_multiple_objects(objects=objectLists)
 
 def showQ3():
     cube = Cube(edgeSize = 3.0).create()
-    parallelepiped = Parallelepiped(width=3.0, heigth=3.0, depth=6.0).create()
-    pyramid = Pyramid(baseSize=6.0, heigth=6.0).create()
-    pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
+    parallelepiped = Parallelepiped(width=2.0, heigth=2.0, depth=5.0).create()
+    pyramid = Pyramid(baseSize=5.0, heigth=5.0).create()
+    pyramidTrunk = PyramidTrunk(lowerBaseSize=2.0, higherBaseSize=5.0, heigth=7.0).create()
 
-    pyramid.translation(Transformations.translationMatrix(10, 5, 4))
-    cube.translation(Transformations.translationMatrix(15,10, 4))
-    parallelepiped.translation(Transformations.translationMatrix(-15, 2, 10))
-    pyramidTrunk.translation(Transformations.translationMatrix(-10, 5, 10))
+    cube.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(7.5,5, 2)
+    ])
 
-    cube.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    parallelepiped.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramid.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramidTrunk.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
+    pyramid.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(5, 2.5, 2)
+    ])
+
+    parallelepiped.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-7.5, 1, 5)
+    ])
+
+    pyramidTrunk.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-5, 2.5, 5)
+    ])
 
     objectLists = [cube, parallelepiped, pyramidTrunk, pyramid]
 
@@ -72,11 +89,11 @@ def showQ3():
     pyramid.color = "black"
     pyramidTrunk.color = "blue"
 
-    eyePoint = (10, -15, 1)
+    eyePoint = (5, -7.5, 0.5)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
 
     for polygon in objectLists:
-        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
+        polygon.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
         
     cameraSystem = changeBase(eyePoint, volumeCenter)
 
@@ -86,32 +103,42 @@ def showQ3():
     eye = Cube(edgeSize = 1.0).create()
     mediumPoint = Cube(edgeSize = 0.5).create()
 
-    eye.translation(Transformations.translationMatrix(10, -15, 1))
-    eye.translation(Transformations.translationMatrix(-10, 15, -1))
+    eye.translation(Transformations.translationMatrix(eyePoint[0], eyePoint[1], eyePoint[2]))
+    eye.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
 
     mediumPoint.translation(Transformations.translationMatrix(volumeCenter[0], volumeCenter[1], volumeCenter[2]))
-    mediumPoint.translation(Transformations.translationMatrix(-10, 15, -1))
+    mediumPoint.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
 
     objectLists.append(eye)
     objectLists.append(mediumPoint)
 
-    Plot(size=(20,20)).plot_multiple_objects(objects=objectLists)
+    Plot(size=(15,15)).plot_multiple_objects(objects=objectLists)
 
 def showQ4():
     cube = Cube(edgeSize = 3.0).create()
-    parallelepiped = Parallelepiped(width=3.0, heigth=3.0, depth=6.0).create()
-    pyramid = Pyramid(baseSize=6.0, heigth=6.0).create()
-    pyramidTrunk = PyramidTrunk(lowerBaseSize=3.0, higherBaseSize=6.0, heigth=8.0).create()
+    parallelepiped = Parallelepiped(width=2.0, heigth=2.0, depth=5.0).create()
+    pyramid = Pyramid(baseSize=5.0, heigth=5.0).create()
+    pyramidTrunk = PyramidTrunk(lowerBaseSize=2.0, higherBaseSize=5.0, heigth=7.0).create()
 
-    pyramid.translation(Transformations.translationMatrix(10, 5, 4))
-    cube.translation(Transformations.translationMatrix(15,10, 4))
-    parallelepiped.translation(Transformations.translationMatrix(-15, 2, 10))
-    pyramidTrunk.translation(Transformations.translationMatrix(-10, 5, 10))
+    cube.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(7.5,5, 2)
+    ])
 
-    cube.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    parallelepiped.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramid.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
-    pyramidTrunk.scale(Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2))
+    pyramid.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(5, 2.5, 2)
+    ])
+
+    parallelepiped.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-7.5, 1, 5)
+    ])
+
+    pyramidTrunk.multipleTransformations([
+        Transformations.scaleMatrix(x=1/2, y=1/2, z=1/2),
+        Transformations.translationMatrix(-5, 2.5, 5)
+    ])
 
     objectLists = [cube, parallelepiped, pyramidTrunk, pyramid]
 
@@ -120,11 +147,11 @@ def showQ4():
     pyramid.color = "black"
     pyramidTrunk.color = "blue"
 
-    eyePoint = (10, -15, 1)
+    eyePoint = (5, -7.5, 0.5)
     volumeCenter = PolygonObject.getVolumeCenter(objects=objectLists)
 
     for polygon in objectLists:
-        polygon.translation(Transformations.translationMatrix(-10, 15, -1))
+        polygon.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
         
     cameraSystem = changeBase(eyePoint, volumeCenter)
 
