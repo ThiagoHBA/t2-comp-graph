@@ -21,22 +21,15 @@ class Plot:
         ax.set_ylabel("Eixo Y")
         ax.set_zlabel("Eixo Z")
 
-        # ax.plot([5.2, -5.2], [0, 0], [0, 0], color='Black', alpha=0.4)
-        # ax.plot([0, 0], [5.2, -5.2], [0, 0], color='Black', alpha=0.4)
-        # ax.plot([0, 0], [0, 0], [5.2, -5.2], color='Black', alpha=0.4)
-
     def plot_object(self, objeto: PolygonObject):
         _, ax = self.initialize_plot()
         
-        # print(objeto.edges)
         for line in objeto.edges:
             ax.plot(
                 [line[0][0], line[1][0]],
                 [line[0][1], line[1][1]],
                 zs=[line[0][2], line[1][2]],
             )
-
-        # ax.add_collection3d(Poly3DCollection(objeto.faces, linewidths=1.5))
 
         ax.set_zlim3d(-self.size[0], self.size[1])
         ax.set_xlim3d(-self.size[0], self.size[1])
@@ -46,7 +39,7 @@ class Plot:
         plt.show()
 
 
-    def plot_multiple_objects(self, objects: List[PolygonObject]):
+    def plot_multiple_objects(self, objects: List[PolygonObject], cameraReference: PolygonObject = None, cameraPoint = None):
         _, ax = self.initialize_plot()
         
         for polygon in objects:
