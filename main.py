@@ -156,6 +156,8 @@ def showQ4():
     eye = Cube(edgeSize = 1.0).create()
     eye.translation(Transformations.translationMatrix(eyePoint[0], eyePoint[1], eyePoint[2]))
 
+    mediumPoint = Cube(edgeSize = 1.0).create()
+
     for polygon in objectLists:
         polygon.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
     
@@ -164,7 +166,20 @@ def showQ4():
     for polygon in objectLists:
         polygon.setVertexes(np.matmul(polygon.vertexes, cameraSystem))
 
+    newCenter = PolygonObject.getVolumeCenter(objects=objectLists)
+
+    eye.translation(Transformations.translationMatrix(-eyePoint[0], -eyePoint[1], -eyePoint[2]))
+    mediumPoint.translation(Transformations.translationMatrix(newCenter[0], newCenter[1], newCenter[2]))
+
+    objectLists.append(eye)
+    objectLists.append(mediumPoint)
+
     Plot(size=(20,20)).plot_multiple_objects(objectLists)
+
+    # for polygon in objectLists:
+    #     for i in range (len(polygon.vertexes)):
+    #         perspectiveMatrix = Transformations.perspectiveMatrix(alpha=45, z=polygon.vertexes[i][2])
+    #         polygon.changePerspective(perspectiveMatrix=perspectiveMatrix, vertex = i)
 
     for polygon in objectLists:
         near = None
@@ -180,6 +195,8 @@ def showQ4():
 
         perspectiveMatrix = Transformations.perspectiveMatrix(alpha=90, far=far, near=near)
         polygon.changePerspective(perspectiveMatrix=perspectiveMatrix, vertex=i)
+
+    
 
     Plot(size=(20,20)).plot_multiple_2D_objects(objectLists)
 

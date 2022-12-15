@@ -51,6 +51,15 @@ class Transformations:
         ])
 
         return translationMatrix
+    
+    # @staticmethod 
+    # def perspectiveMatrix(alpha, z, r = 1):
+    #     return np.matrix([
+    #         [1/(r*z*tan(alpha/2)), 0, 0, 0],
+    #         [0, 1/(z*tan(alpha/2)), 0, 0],
+    #         [0, 0, 0, 1/tan(alpha/2)],
+    #         [0, 0, 0, 1]
+    #     ])
 
     @staticmethod
     def perspectiveMatrix(alpha, near, far, rad=False, r = 1):
